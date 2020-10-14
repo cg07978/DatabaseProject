@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 include('db_connection.php');
 
 $username = $password = '';
@@ -54,7 +56,9 @@ $errors = array('username' => '', 'password' => '');
 				$errors['password'] = 'Invalid password.';
 			}
 			else {
-				echo 'Success!';
+				//success
+				$_SESSION['username'] = $username;
+				header('Location: choice.php');
 			}
 			
 
