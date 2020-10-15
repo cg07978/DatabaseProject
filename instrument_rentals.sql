@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 13, 2020 at 07:41 PM
+-- Generation Time: Oct 15, 2020 at 02:44 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.6
 
@@ -73,13 +73,20 @@ CREATE TABLE `a_u_monitors` (
 CREATE TABLE `instrument` (
   `inst_id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `date_posted` timestamp NULL DEFAULT NULL,
+  `date_posted` datetime DEFAULT NULL,
   `price` decimal(10,2) NOT NULL,
   `status` enum('available','hidden','rented') NOT NULL DEFAULT 'hidden',
-  `rent_time` timestamp NULL DEFAULT NULL,
+  `rent_time` datetime DEFAULT NULL,
   `owner_username` varchar(32) NOT NULL,
   `renter_username` varchar(32) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `instrument`
+--
+
+INSERT INTO `instrument` (`inst_id`, `name`, `date_posted`, `price`, `status`, `rent_time`, `owner_username`, `renter_username`) VALUES
+(6, 'Piccolo', '2020-10-07 19:34:01', '17.00', 'rented', '2020-10-11 19:38:10', 'orange', 'firstone1');
 
 -- --------------------------------------------------------
 
@@ -89,7 +96,7 @@ CREATE TABLE `instrument` (
 
 CREATE TABLE `payment` (
   `payment_id` int(11) NOT NULL,
-  `start_date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `start_date` datetime NOT NULL DEFAULT current_timestamp(),
   `amount` decimal(10,2) NOT NULL,
   `payer_username` varchar(32) NOT NULL,
   `reciever_username` varchar(32) NOT NULL
@@ -182,7 +189,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `instrument`
 --
 ALTER TABLE `instrument`
-  MODIFY `inst_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `inst_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `payment`

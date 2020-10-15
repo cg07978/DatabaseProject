@@ -29,9 +29,27 @@
 
 		$sql = "UPDATE instrument SET status = '$new_status' WHERE inst_id = $id_to_update";
 
+
 		if(mysqli_query($conn, $sql)) {
-			//success
-			header('Location: seller.php');
+			if(strcmp($new_status, 'available') == 0) {
+			
+			$sql = "UPDATE instrument SET date_posted = CURRENT_TIMESTAMP WHERE inst_id = $id_to_update";
+			}
+			else {
+			$sql = "UPDATE instrument SET date_posted = null WHERE inst_id = $id_to_update";
+			}
+
+			if(mysqli_query($conn, $sql)) {
+				//success
+				header('Location: seller.php');
+			}
+
+			else {
+				echo 'query error: '. mysqli_error($conn);
+			}
+
+
+			
 		} else {
 			echo 'query error: '. mysqli_error($conn);
 		}
