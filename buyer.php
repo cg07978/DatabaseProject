@@ -132,6 +132,9 @@ mysqli_free_result($result);
 								</ul>
 							</div>
 						</div>
+							<div class="card-action center">
+							<a class="brand-text" href="return.php?id=<?php echo $rent['inst_id'] ?>">RETURN</a>
+						</div>
 					</div>
 				</div>
 
@@ -164,7 +167,7 @@ mysqli_free_result($result);
 				<div class="col s6 md3">
 					<div class="card z-depth-0">
 						<div class = "card-content center">
-							<h6><?php echo htmlspecialchars($paymernt['reciever_username']); ?></h6>
+							<h6><?php echo htmlspecialchars($payment['reciever_username']); ?></h6>
 							<div>
 								<ul>
 								<?php echo "Amount: ".htmlspecialchars($payment['amount']); ?>

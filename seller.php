@@ -92,7 +92,7 @@ mysqli_free_result($result);
 				<div class="col s6 md3">
 					<div class="card z-depth-0">
 						<div class = "card-content center">
-							<h6><?php echo htmlspecialchars($paymernt['payer_username']); ?></h6>
+							<h6><?php echo htmlspecialchars($payment['payer_username']); ?></h6>
 							<div>
 								<ul>
 								<?php echo "Amount: ".htmlspecialchars($payment['amount']); ?>
