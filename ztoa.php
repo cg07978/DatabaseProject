@@ -107,7 +107,7 @@ $instruments = mysqli_fetch_all($result, MYSQLI_ASSOC);
 									}
 
 									 ?>
-									 <li><?php echo 'Seller Rating: '.htmlspecialchars($res).'/5.0' ?></li>
+									 <li><?php echo 'Seller Rating: '.htmlspecialchars(number_format((float)$res, 2, '.', '')).'/5.0' ?></li>
 								</ul>
 							</div>
 						</div>

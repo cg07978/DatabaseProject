@@ -30,6 +30,9 @@
 	<body class = "grey lighten-4">
 		<nav class="white z-depth-0">
 			<div class="container">
+                <ul id = "nav-mobile" class="left hide-on-small-and-down">
+                    <a href="login.php" class="btn btnback z-depth-0">Log Out</a>
+                </ul>
 				<a href="" class="brand-logo brand-text center">Instrument Rentals</a>
                 <ul id="nav-mobile" class="right hide-on-small-and-down">
                     <li class="grey-text">Hello <?php echo htmlspecialchars($username); ?></li>

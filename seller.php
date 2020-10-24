@@ -40,7 +40,7 @@ mysqli_free_result($result);
 			$res = $user['total_points'] / $user['feedback_count'];
 		}	
 	 ?>
-	 <p><?php echo "Your current rating is: $res" ?></p>
+	 <p><?php echo "Your current rating is: ".number_format((float)$res, 2, '.', '') ?></p>
 </div>
 
 	<div class="container">
