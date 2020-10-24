@@ -6,6 +6,7 @@ include('db_connection.php');
 
 $username = $password = '';
 $errors = array('username' => '', 'password' => '');
+$_SESSION['username'] = '';
 
 	if(isset($_POST['submit'])) {
 		

@@ -6,6 +6,8 @@
 
 	include('db_connection.php');
 
+	$illegal = false;
+
 	//check get request id parameter
 	if(isset($_GET['id'])) {
 
@@ -22,6 +24,10 @@
 		$instrument = mysqli_fetch_assoc($result);
 
 		mysqli_free_result($result);
+
+		if(strcmp($instrument['renter_username'], $username) != 0) {
+			$illegal = true;
+		}
 
 
 	}
@@ -58,7 +64,7 @@
 				$mistake = true;
 			}
 				
-			$sql = "UPDATE instrument SET renter_username = NULL, status = 'hidden' WHERE inst_id = $id";
+			$sql = "UPDATE instrument SET renter_username = NULL, status = 'hidden', date_posted = NULL, rent_time = NULL WHERE inst_id = $id";
 
 			if(!mysqli_query($conn, $sql)) {
 				echo 'query error: '.mysqli_error($conn);
@@ -121,7 +127,7 @@
  <?php include 'inst_header2.php'; ?>
 
 <div class="container center grey-text">
-	<?php if($instrument): ?>
+	<?php if($instrument && !$illegal): ?>
 
 		<h4><?php echo 'Return '.htmlspecialchars($instrument['owner_username'])."'s ".htmlspecialchars($instrument['name']).':'; ?></h4>
 		<?php 

@@ -3,6 +3,7 @@
 	session_start();
 
 	$username = $_SESSION['username'];
+	$illegal = false;
 
 	include('db_connection.php');
 
@@ -74,6 +75,10 @@
 		mysqli_free_result($result);
 		mysqli_close($conn);
 
+		if(strcmp($instrument['owner_username'], $username) != 0) {
+			$illegal = true;
+		}
+
 
 	}
 
@@ -84,7 +89,7 @@
  <?php include 'inst_header2.php'; ?>
 
 <div class="container center grey-text">
-	<?php if($instrument): ?>
+	<?php if($instrument && !$illegal): ?>
 
 		<h4><?php echo htmlspecialchars($instrument['name']); ?></h4>
 		<p>Daily Price: $<?php echo htmlspecialchars($instrument['price']); ?></p>

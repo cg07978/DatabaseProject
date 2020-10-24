@@ -208,7 +208,7 @@ $instruments = mysqli_fetch_all($result, MYSQLI_ASSOC);
 							<h6><?php echo htmlspecialchars($payment['reciever_username']); ?></h6>
 							<div>
 								<ul>
-								<?php echo "Amount: ".htmlspecialchars($payment['amount']); ?>
+								<?php echo "Amount: $".htmlspecialchars($payment['amount']); ?>
 								<?php echo "Owed since: ".date($payment['start_date']) ?>
 								</ul>
 							</div>

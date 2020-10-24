@@ -95,7 +95,7 @@ mysqli_free_result($result);
 							<h6><?php echo htmlspecialchars($payment['payer_username']); ?></h6>
 							<div>
 								<ul>
-								<?php echo "Amount: ".htmlspecialchars($payment['amount']); ?>
+								<?php echo "Amount: $".htmlspecialchars($payment['amount']); ?>
 								<?php echo "Owed since: ".date($payment['start_date']) ?>
 								</ul>
 							</div>
