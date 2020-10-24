@@ -88,7 +88,25 @@
 		}
 
 		if (!$mistake) {
-			header('Location: buyer.php');
+			$sort = $_SESSION['sort'];
+	if(strcmp($sort, 'oldest_first') == 0) {
+		header("Location: oldestfirst.php");
+	}
+	else if(strcmp($sort, 'a-z') == 0) {
+		header("Location: atoz.php");
+	}
+	else if(strcmp($sort, 'z-a') == 0) {
+		header("Location: ztoa.php");
+	}
+	else if(strcmp($sort, 'hi_to_low') == 0) {
+		header("Location: hitolow.php");
+	}
+	else if(strcmp($sort, 'low_to_hi') == 0) {
+		header("Location: lowtohi.php");
+	}
+	else {
+		header("Location: buyer.php");
+	}
 		}
 
 		}

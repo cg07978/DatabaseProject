@@ -5,7 +5,7 @@ session_start();
 include('db_connection.php');
 
 $username = $_SESSION['username'];
-$_SESSION['sort'] = "newest_first";
+$_SESSION['sort'] = "oldest_first";
 
 if (isset($_POST['new_sort'])) {
 $sort = $_POST['sort'];
@@ -53,7 +53,7 @@ if(isset($_POST['pay'])) {
 	}
 }
 
-$sql = "SELECT * FROM instrument WHERE status = 'available' AND owner_username != '$username' ORDER BY date_posted DESC";
+$sql = "SELECT * FROM instrument WHERE status = 'available' AND owner_username != '$username' ORDER BY date_posted";
 
 $result = mysqli_query($conn, $sql);
 
@@ -112,7 +112,7 @@ $instruments = mysqli_fetch_all($result, MYSQLI_ASSOC);
 							</div>
 						</div>
 						<div class="card-action center">
-							<form class="white" action="buyer.php" method="POST">
+							<form class="white" action="oldestfirst.php" method="POST">
 							<input type="submit" name="purchase" value="Purchase" class="btn btnback z-depth-0">
 							<input type="hidden" name="id_to_buy" value="<?php echo $instrument['inst_id']; ?>">
 						</form>
@@ -214,7 +214,7 @@ $instruments = mysqli_fetch_all($result, MYSQLI_ASSOC);
 							</div>
 						</div>
 						<div class="card-action center">
-							<form class="white" action="buyer.php" method="POST">
+							<form class="white" action="oldestfirst.php" method="POST">
 							<input type="submit" name="pay" value="Pay" class="btn btnback z-depth-0">
 							<input type="hidden" name="id_to_pay" value="<?php echo $payment['payment_id']; ?>">
 						</form>
@@ -226,8 +226,8 @@ $instruments = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
 		<form action="buyer.php" method="POST">
 			<select name="sort" class="browser-default">
-				<option value="newest_first">newest first</option>
 				<option value="oldest_first">oldest first</option>
+				<option value="newest_first">newest first</option>
 				<option value="a-z">a-z</option>
 				<option value="z-a">z-a</option>
 				<option value="hi_to_low">high to low</option>
