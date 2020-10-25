@@ -269,7 +269,7 @@ $intswatched = mysqli_fetch_all($result, MYSQLI_ASSOC);
 								</li>
 								<?php if(!empty($usw['renter_username'])) { ?>
 								<li>
-								<?php echo "Renter: ".date($usw['renter_username']); ?>
+								<?php echo "Renter: ".htmlspecialchars($usw['renter_username']); ?>
 								</li>
 								<?php } ?>
 								</ul>
