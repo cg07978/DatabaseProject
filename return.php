@@ -2,25 +2,25 @@
 
 	session_start();
 
+	/*This page is for returning instruments. Before an instrument is returned the seller must be rated.*/
+
 	$username = $_SESSION['username'];
 
 	include('db_connection.php');
 
 	$illegal = false;
 
-	//check get request id parameter
+	/*This code is executed to generate the page based on the instrument that the user decided to return. It will also set a flag
+	if the current user is not the one who is renting the instrument.*/
+
 	if(isset($_GET['id'])) {
 
 		$id = mysqli_real_escape_string($conn, $_GET['id']);
 
-		//make sql
 		$sql = "SELECT * FROM instrument WHERE inst_id = $id";
-
-		//get the query results
 
 		$result = mysqli_query($conn, $sql);
 
-		//fetch the result in array format
 		$instrument = mysqli_fetch_assoc($result);
 
 		mysqli_free_result($result);
@@ -32,8 +32,15 @@
 
 	}
 
+	/*A variable for storing errors is maintained.*/
+
 	$errors = array('rating' => '');
 	$rating = '';
+
+	/*This code executes whenever the user decides to submit their review. If there are any errors the user will be notified.
+	If not then the database will be updated appropriately. The seller's rating will be updated, the instrument will
+	be set to hidden and will no longer be rented out, and a payment will be created. After this it will send the user
+	back to the page that has the sorting method they were previously using.*/
 
 	if(isset($_POST['submit'])) {
 		$mistake = false;
@@ -56,7 +63,6 @@
 
 			$renter = $instrument['owner_username'];
 
-			//create sql
 			$sql = "UPDATE user SET feedback_count = feedback_count + 1, total_points = total_points + $rating WHERE username = '$renter'";
 
 			if(!mysqli_query($conn, $sql)) {
@@ -71,7 +77,7 @@
 				$mistake = true;
 			}
 
-
+			/*MySQL provides a function for determining date difference, so it is used to calculate it here.*/
 		$time = $instrument['rent_time'];
 		$sql2 = "SELECT DATEDIFF(CURRENT_TIMESTAMP, '$time') AS diff";
 		$answer = mysqli_query($conn, $sql2);
@@ -127,6 +133,8 @@
  <?php include 'inst_header2.php'; ?>
 
 <div class="container center grey-text">
+	<!-- The page will not be displayed if no instrument corresponds to the id or if the user is not the one who is
+	renting the instrument. -->
 	<?php if($instrument && !$illegal): ?>
 
 		<h4><?php echo 'Return '.htmlspecialchars($instrument['owner_username'])."'s ".htmlspecialchars($instrument['name']).':'; ?></h4>

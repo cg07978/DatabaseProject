@@ -1,6 +1,7 @@
 <head>
 	<title>Instrument Rentals</title>
-	<!-- Compiled and minified CSS -->
+	<!-- This is the header for the seller page. 
+    It is very similar to inst_header2 but this one has an Add Instrument button that will take the seller to the page to do so. -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <style type="text/css">
     	.brand {

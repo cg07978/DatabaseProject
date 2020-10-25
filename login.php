@@ -1,13 +1,20 @@
 <?php
+/*This is the login page. A session is started to keep track of variables for who is logged in across different pages.
+When this page is accessed it is often from the log out button. Therefore it clears any remaining session variables
+to prevent the possibility of unauthorized access.*/
 
 session_start();
 
 include('db_connection.php');
 
+//an array of errors is maintained to record any issues present with a submission
+
 $username = $password = '';
 $errors = array('username' => '', 'password' => '');
 $_SESSION['username'] = '';
 $_SESSION['admin_password'] = '';
+
+//This code executes if the submit button has been pressed. It checks for errors and updates the array as is needed.
 
 	if(isset($_POST['submit'])) {
 		
@@ -32,6 +39,9 @@ $_SESSION['admin_password'] = '';
 		}
 
 		if(array_filter($errors)) {
+			/*If there are errors present this code is run to see if the username field is empty
+			and if the given password belongs to the administrator. In the event both are true the
+			administrator is logged in.*/
 			$apw = $_POST['password'];
 			$sql3 = "SELECT * FROM administrator WHERE password = '$apw'";
 			$apws = mysqli_query($conn, $sql3);
@@ -42,11 +52,12 @@ $_SESSION['admin_password'] = '';
 			}
 			
 		} else {
+			/*If nothing was wrong with the input itself the database is queried to see if the username exists,
+			and if it does, if the correct password has been entered. If both are true the user is logged in.*/
 
 			$username = mysqli_real_escape_string($conn, $_POST['username']);
 			$password = mysqli_real_escape_string($conn, $_POST['password']);
 
-			//create sql
 			$sql = "SELECT username, password FROM user WHERE username = '$username'";
 
 			$result = mysqli_query($conn, $sql);
@@ -66,16 +77,10 @@ $_SESSION['admin_password'] = '';
 				$errors['password'] = 'Invalid password.';
 			}
 			else {
-				//success
 				$_SESSION['username'] = $username;
 				header('Location: choice.php');
 			}
 			
-
-
-
-				//success
-				//header('Location: index.php');
 		
 			
 
@@ -86,7 +91,9 @@ $_SESSION['admin_password'] = '';
 
 
 
-		} //end of post check
+		} 
+
+		//If the create account button is pressed then the user is taken to the new account page.
 
 		if(isset($_POST['newacc'])) {
 			header('Location: newacc.php');
@@ -98,7 +105,8 @@ $_SESSION['admin_password'] = '';
 <html>
 
 	<?php include 'inst_header.php'; ?>
-
+	<!-- The login page itself. Any errors are reported to the user, but the information they entered will be
+	preserved in the text fields. -->
 	<section class="container grey-text">
 		<h4 class="center">Login</h4>
 		<form class="white" action="login.php" method="POST">

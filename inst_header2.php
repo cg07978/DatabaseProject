@@ -1,6 +1,7 @@
 <head>
 	<title>Instrument Rentals</title>
-	<!-- Compiled and minified CSS -->
+	<!-- This is the header for all pages barring the login, admin, and seller pages. 
+    It is very similar to inst_header, but it has a log out button and a greeting showing the username of who is logged in. -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <style type="text/css">
     	.brand {

@@ -4,31 +4,11 @@ session_start();
 
 include('db_connection.php');
 
+/*This page is very similar to buyer, except it orders available instruments in reverse alphabetical order.*/
+
 $username = $_SESSION['username'];
 $_SESSION['sort'] = "z-a";
 
-if (isset($_POST['new_sort'])) {
-$sort = $_POST['sort'];
-	if(strcmp($sort, 'oldest_first') == 0) {
-		header("Location: oldestfirst.php");
-	}
-	else if(strcmp($sort, 'a-z') == 0) {
-		header("Location: atoz.php");
-	}
-	else if(strcmp($sort, 'z-a') == 0) {
-		header("Location: ztoa.php");
-	}
-	else if(strcmp($sort, 'hi_to_low') == 0) {
-		header("Location: hitolow.php");
-	}
-	else if(strcmp($sort, 'low_to_hi') == 0) {
-		header("Location: lowtohi.php");
-	}
-	else {
-		header("Location: buyer.php");
-	}
-
-}
 
 if(isset($_POST['purchase'])) {
 	$id = $_POST['id_to_buy'];
@@ -58,10 +38,6 @@ $sql = "SELECT * FROM instrument WHERE status = 'available' AND owner_username !
 $result = mysqli_query($conn, $sql);
 
 $instruments = mysqli_fetch_all($result, MYSQLI_ASSOC);
-
-//mysqli_free_result($result);
-
-//mysqli_close($conn);
 
 ?>
 
@@ -189,8 +165,6 @@ $instruments = mysqli_fetch_all($result, MYSQLI_ASSOC);
 	$result = mysqli_query($conn, $sql);
 
 	$payments = mysqli_fetch_all($result, MYSQLI_ASSOC);
-
-	//mysqli_free_result($result);
 
 	if (mysqli_num_rows($result) != 0) {
 	?>

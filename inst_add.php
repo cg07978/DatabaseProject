@@ -6,8 +6,13 @@ $username = $_SESSION['username'];
 
 include('db_connection.php');
 
+/*This page is for adding an instrument. Errors are collected and processed, and if a submission is successful the instrument is
+added to the database and the user is directed back to the seller page.*/
+
 $name = $price = '';
 $errors = array('name' => '', 'price' => '');
+
+/*This code is run when the submit button is pressed.*/
 
 	if(isset($_POST['submit'])) {
 		
@@ -41,16 +46,11 @@ $errors = array('name' => '', 'price' => '');
 			$name = mysqli_real_escape_string($conn, $_POST['name']);
 			$price = mysqli_real_escape_string($conn, $_POST['price']);
 
-			//create sql
 			$sql = "INSERT INTO instrument(name, price, owner_username) VALUES('$name', '$price', '$username')";
 
-			//save to db and check
-
 			if(mysqli_query($conn, $sql)) {
-				//success
 				header('Location: seller.php');
 			} else {
-				//error
 				echo 'query error: '.mysqli_error($conn);
 			}
 
@@ -58,7 +58,7 @@ $errors = array('name' => '', 'price' => '');
 
 
 
-		} //end of post check
+		} 
 
 ?>
 
@@ -66,7 +66,7 @@ $errors = array('name' => '', 'price' => '');
 <html>
 
 	<?php include 'inst_header2.php'; ?>
-
+<!-- This is the actual form for adding an instrument. -->
 	<section class="container grey-text">
 		<h4 class="center">Add an Instrument</h4>
 		<form class="white" action="inst_add.php" method="POST">

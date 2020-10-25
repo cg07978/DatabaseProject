@@ -7,6 +7,13 @@
 
 	include('db_connection.php');
 
+	/*This page lists more information about a specific instrument. The user must be the owner of the instrument to view it.
+	This page also allows the user to change the status of the instrument if it is available or hidden. Instruments are
+	hidden by default, so they cannot be seen by other users. When instruments are made available they are posted, and the
+	date is recorded. If the instrument is rented it cannot have its status changed or be deleted, which is an option given otherwise.*/
+
+	/*This code is run if the delete button is pressed. If successful, it takes the user back to the seller page.*/
+
 	if(isset($_POST['delete'])) {
 
 		$id_to_delete = mysqli_real_escape_string($conn, $_POST['id_to_delete']);
@@ -14,12 +21,14 @@
 		$sql = "DELETE FROM instrument WHERE inst_id = $id_to_delete";
 
 		if(mysqli_query($conn, $sql)) {
-			//success
+
 			header('Location: seller.php');
 		} else {
 			echo 'query error: '. mysqli_error($conn);
 		}
 	}
+
+	/*This code is run if a new status is set.*/
 
 	if(isset($_POST['new_status'])) {
 		$new_status = mysqli_real_escape_string($conn, $_POST['status']);
@@ -37,11 +46,11 @@
 			$sql = "UPDATE instrument SET date_posted = CURRENT_TIMESTAMP WHERE inst_id = $id_to_update";
 			}
 			else {
-			$sql = "UPDATE instrument SET date_posted = null WHERE inst_id = $id_to_update";
+			$sql = "UPDATE instrument SET date_posted = NULL WHERE inst_id = $id_to_update";
 			}
 
 			if(mysqli_query($conn, $sql)) {
-				//success
+
 				header('Location: seller.php');
 			}
 
@@ -57,19 +66,16 @@
 
 	}
 
-	//check get request id parameter
+	/*This code generates the page based on what instrument was selected to get to it.*/
+
 	if(isset($_GET['id'])) {
 
 		$id = mysqli_real_escape_string($conn, $_GET['id']);
 
-		//make sql
 		$sql = "SELECT * FROM instrument WHERE inst_id = $id";
-
-		//get the query results
 
 		$result = mysqli_query($conn, $sql);
 
-		//fetch the result in array format
 		$instrument = mysqli_fetch_assoc($result);
 
 		mysqli_free_result($result);
@@ -93,6 +99,8 @@
  <?php include 'inst_header2.php'; ?>
 
 <div class="container center grey-text">
+	<!-- The page will not be displayed if no instrument corresponds to the id or if the user is not the one who owns
+	 the instrument. -->
 	<?php if($instrument && !$illegal): ?>
 
 		<h4><?php echo htmlspecialchars($instrument['name']); ?></h4>
@@ -114,7 +122,6 @@
 		</form>
 	<?php } ?>
 
-		<!--Delete form -->
 
 		<?php if(strcmp($instrument['status'], 'hidden') == 0) { ?>
 		<form action="inst_details.php" method="POST">

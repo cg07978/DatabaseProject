@@ -8,7 +8,7 @@ $username = $_SESSION['username'];
 
 <!DOCTYPE html>
 <html>
-
+<!-- This page gives the user the option to choose if they would like to buy or sell instruments, and directs them to the appropriate page. -->
 	<?php include 'inst_header2.php'; ?>
 
 	<section class="container grey-text">

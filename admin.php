@@ -4,6 +4,11 @@ session_start();
 
 include('db_connection.php');
 
+/*This is page for an admin to user. By default, the one admin monitors all users, instruments, and payments. This interface
+allows the admin to view all details of each one, and to delete them if they decide to. To keep the database orderly a user
+cannot be deleted unless they have no relationship with any instruments or payments, which can be accomplished by deletions if need be. This page will display nothing but a message if the one accessing it is not an administrator. Any deletion errors
+are saved and displayed.*/
+
 $password = $_SESSION['admin_password'];
 $error = '';
 $illegal = false;
@@ -11,6 +16,8 @@ $illegal = false;
 if(empty($password)) {
 	$illegal = true;
 }
+
+/*This code runs when the administrator decides to delete a user. It will either delete them or display an appropriate error message*/
 
 if(isset($_POST['delete_u'])) {
 $mistake = false;
@@ -50,6 +57,7 @@ if(!$mistake) {
 
 }
 
+/*This code runs if the administrator decides to delete an instrument.*/
 if(isset($_POST['delete_i'])) {
 $di = $_POST['inst_id_to_delete'];
 $sql = "DELETE FROM instrument WHERE inst_id = $di";
@@ -58,6 +66,8 @@ $sql = "DELETE FROM instrument WHERE inst_id = $di";
 	}
 }
 
+/*This code runs if the administrator decides to delete a pending payment.*/
+
 if(isset($_POST['delete_p'])) {
 $pid = $_POST['pid_to_delete'];
 $sql = "DELETE FROM payment WHERE payment_id = $pid";
@@ -65,6 +75,8 @@ $sql = "DELETE FROM payment WHERE payment_id = $pid";
 		echo 'query error: '. mysqli_error($conn);
 	}
 }
+
+/*The following blocks of code update the tables that store what administrator monitors what with the administator monitoring all other entities.*/
 
 $sql = "SELECT * FROM user";
 
@@ -110,6 +122,8 @@ foreach($payments as $payment) {
 		break;
 	}
 }
+
+/*This is the actual page that displays the users, instruments, and payments the administrator monitors.*/
 
 
 

@@ -1,10 +1,11 @@
 <?php
-
+/*This is the page for creating a new account. It works similarly to the login page, but the errors and text
+fields are of course different.*/
 include('db_connection.php');
 
 $username = $password = $email = $address = $dig16 = $security = $expiration = '';
 $errors = array('username' => '', 'password' => '', 'email' => '', 'address' => '', "dig16" => '', 'security' => '', 'expiration' => '');
-
+/*If the submit button is pressed the text fields are checked for errors.*/
 	if(isset($_POST['makeacc'])) {
 		
 		if(empty($_POST['username'])) {
@@ -112,7 +113,7 @@ $errors = array('username' => '', 'password' => '', 'email' => '', 'address' => 
 		if(array_filter($errors)) {
 			
 		} else {
-
+			/*If there are no errors the account is created.*/
 			$username = mysqli_real_escape_string($conn, $_POST['username']);
 			$password = mysqli_real_escape_string($conn, $_POST['password']);
 			$email = mysqli_real_escape_string($conn, $_POST['email']);
@@ -122,19 +123,14 @@ $errors = array('username' => '', 'password' => '', 'email' => '', 'address' => 
 			$expiration = mysqli_real_escape_string($conn, $_POST['expiration']);
 
 
-			//create sql
 			$sql = "INSERT INTO user(username, password, email, address, dig, security_code, expiration_date) VALUES('$username', '$password', '$email', '$address', '$dig16', '$security', '$expiration')";
-
+			/*If the database is updated properly the user will be taken back to the login page. If not, an error will be displayed.*/
 			if(mysqli_query($conn, $sql)) {
-				//success
 				header('Location: login.php');
 			} else {
-				//error
 				echo 'query error: '.mysqli_error($conn);
 			}
 			
-				//success
-				//header('Location: index.php');
 		
 			
 
@@ -145,7 +141,7 @@ $errors = array('username' => '', 'password' => '', 'email' => '', 'address' => 
 
 
 
-		} //end of post check
+		} 
 
 
 ?>

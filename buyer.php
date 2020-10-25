@@ -4,9 +4,14 @@ session_start();
 
 include('db_connection.php');
 
+/*This page is for users who are looking to rent instruments. It will keep a session variable that tells what the latest
+sorting method for available instruments was. The sorting method can be changed at the bottom of the page.
+It lists the more recently posted instruments first, as a default.*/
+
 $username = $_SESSION['username'];
 $_SESSION['sort'] = "newest_first";
 
+/*This code runs when the user decides to change the sorting method.*/
 if (isset($_POST['new_sort'])) {
 $sort = $_POST['sort'];
 	if(strcmp($sort, 'oldest_first') == 0) {
@@ -30,6 +35,9 @@ $sort = $_POST['sort'];
 
 }
 
+/*This code runs when the user decides to purchase an instrument. Since they will not obtain the instrument for 24 hours,
+the rent time will be exactly one day in the future relative to when the button is pressed.*/
+
 if(isset($_POST['purchase'])) {
 	$id = $_POST['id_to_buy'];
 
@@ -41,6 +49,9 @@ if(isset($_POST['purchase'])) {
 		echo 'query error: '. mysqli_error($conn);
 	}
 }
+
+/*This code runs when the user decides to pay money that they owe. This eliminates the need to keep track of the payment, so
+it is deleted from the database.*/
 
 if(isset($_POST['pay'])) {
 	$id_to_pay = $_POST['id_to_pay'];
@@ -59,16 +70,14 @@ $result = mysqli_query($conn, $sql);
 
 $instruments = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
-//mysqli_free_result($result);
-
-//mysqli_close($conn);
-
 ?>
 
 <!DOCTYPE html>
 <html>
 
 <?php include('inst_header2.php'); ?>
+
+<!-- This section shows all available instruments in the database. -->
 
 <?php if (mysqli_num_rows($result) != 0) {
 	?>
@@ -135,6 +144,8 @@ $instruments = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
 	if (mysqli_num_rows($result) != 0) {
 	?>
+	<!-- This section displays the instruments that have been recieved by the user. If they click the return button
+		they will be sent to return to process it. -->
 	<h3 class="center grey-text">Instruments You're Renting:</h3>
 		<?php } ?>
 
@@ -151,6 +162,7 @@ $instruments = mysqli_fetch_all($result, MYSQLI_ASSOC);
 								<ul>
 								<li><?php echo 'Rented Since: '.htmlspecialchars($rent['rent_time']); ?></li>
 								<li><?php 
+								/*MySQL provides a function for determining date difference, so it is used to calculate it here.*/
 								$time = $rent['rent_time'];
 								$sql2 = "SELECT DATEDIFF(CURRENT_TIMESTAMP, '$time') AS diff";
 								$answer = mysqli_query($conn, $sql2);
@@ -190,10 +202,10 @@ $instruments = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
 	$payments = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
-	//mysqli_free_result($result);
-
 	if (mysqli_num_rows($result) != 0) {
 	?>
+	<!-- This section shows any pending payments that the user owes money on. There is a button the user can select if
+	they decide to pay a specific payment. -->
 	<h3 class="center grey-text">Pending Payments:</h3>
 		<?php } ?>
 
@@ -223,7 +235,9 @@ $instruments = mysqli_fetch_all($result, MYSQLI_ASSOC);
 				</div>
 
 			<?php endforeach; ?>
-
+	<!-- This is where the user can select their preferred sorting method for available instruments. Regardless of the page
+	this form appears on it will initially send the user to buyer, where their selection will be processed and they will be sent
+	to the appropriate page from there. -->
 		<form action="buyer.php" method="POST">
 			<select name="sort" class="browser-default">
 				<option value="newest_first">newest first</option>

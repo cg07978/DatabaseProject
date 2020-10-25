@@ -1,6 +1,7 @@
 <head>
 	<title>Instrument Rentals</title>
-	<!-- Compiled and minified CSS -->
+	<!-- This is the header for the login page.
+    It links the site to Materialize CSS, sets styles that are used by different assets, and creates the top of the page. -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <style type="text/css">
     	.brand {

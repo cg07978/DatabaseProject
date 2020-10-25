@@ -4,6 +4,8 @@ session_start();
 
 include('db_connection.php');
 
+/*This is the page for users who want to offer instruments.*/
+
 $username = $_SESSION['username'];
 
 $sql = "SELECT inst_id, name, status FROM instrument WHERE owner_username = '$username'";
@@ -14,8 +16,6 @@ $instruments = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
 mysqli_free_result($result);
 
-//mysqli_close($conn);
-
 ?>
 
 <!DOCTYPE html>
@@ -23,7 +23,8 @@ mysqli_free_result($result);
 
 <?php include('seller_header.php'); ?>
 
-<h4 class="center grey-text">Your Instruments:</h4>
+<!-- This section lists the instruments that the user owns. If they want more information and options about a specific
+instrument there will be a link for them to click. It also calculates and lists their rating beforehand. -->
 
 <div class="center grey-text">
 	<?php 
@@ -34,14 +35,19 @@ mysqli_free_result($result);
 		mysqli_free_result($result);	
 		$res;
 		if ($user['feedback_count'] == 0) {
-			$res = 'None';
+			$res = 'None'; ?>
+			<p><?php echo "Your current rating is: ".$res ?></p>
+			<?php
 		}
 		else {
-			$res = $user['total_points'] / $user['feedback_count'];
+			$res = $user['total_points'] / $user['feedback_count']; ?>
+			<p><?php echo "Your current rating is: ".number_format((float)$res, 2, '.', '') ?></p>
+			<?php
 		}	
 	 ?>
-	 <p><?php echo "Your current rating is: ".number_format((float)$res, 2, '.', '') ?></p>
 </div>
+
+<h4 class="center grey-text">Your Instruments:</h4>
 
 	<div class="container">
 		<div class = "row">
@@ -69,6 +75,8 @@ mysqli_free_result($result);
 		</div>
 	</div>
 
+<!-- This section lists all the pending payments that are owed to the user. -->
+
 	<?php 
 
 	$sql = "SELECT * FROM payment WHERE reciever_username = '$username'";
@@ -76,8 +84,6 @@ mysqli_free_result($result);
 	$result = mysqli_query($conn, $sql);
 
 	$payments = mysqli_fetch_all($result, MYSQLI_ASSOC);
-
-	//mysqli_free_result($result);
 
 	if (mysqli_num_rows($result) != 0) {
 	?>

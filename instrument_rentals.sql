@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 15, 2020 at 02:44 AM
+-- Generation Time: Oct 25, 2020 at 09:40 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.6
 
@@ -31,6 +31,13 @@ CREATE TABLE `administrator` (
   `password` varchar(128) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `administrator`
+--
+
+INSERT INTO `administrator` (`password`) VALUES
+('clause490');
+
 -- --------------------------------------------------------
 
 --
@@ -41,6 +48,13 @@ CREATE TABLE `a_i_monitors` (
   `admin_password` varchar(128) NOT NULL,
   `instrument_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `a_i_monitors`
+--
+
+INSERT INTO `a_i_monitors` (`admin_password`, `instrument_id`) VALUES
+('clause490', 8);
 
 -- --------------------------------------------------------
 
@@ -64,6 +78,14 @@ CREATE TABLE `a_u_monitors` (
   `user_username` varchar(32) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `a_u_monitors`
+--
+
+INSERT INTO `a_u_monitors` (`admin_password`, `user_username`) VALUES
+('clause490', 'firstone1'),
+('clause490', 'orange');
+
 -- --------------------------------------------------------
 
 --
@@ -86,7 +108,8 @@ CREATE TABLE `instrument` (
 --
 
 INSERT INTO `instrument` (`inst_id`, `name`, `date_posted`, `price`, `status`, `rent_time`, `owner_username`, `renter_username`) VALUES
-(6, 'Piccolo', '2020-10-07 19:34:01', '17.00', 'rented', '2020-10-11 19:38:10', 'orange', 'firstone1');
+(8, 'drum', '2020-10-25 15:40:25', '5.65', 'available', NULL, 'orange', NULL),
+(9, 'harp', '2020-10-25 15:40:46', '8.95', 'available', NULL, 'orange', NULL);
 
 -- --------------------------------------------------------
 
@@ -125,8 +148,8 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`username`, `password`, `email`, `address`, `total_points`, `feedback_count`, `dig`, `security_code`, `expiration_date`) VALUES
-('firstone1', 'secondone2', 'firstone@gmail.com', '3456 Real Road', 0, 0, '7838281823821234', 434, '2020-10-31'),
-('orange', 'juice', 'tropicana@gmail.com', '3412 Florida Way', 0, 0, '4324868594839281', 345, '2021-04-12');
+('firstone1', 'secondone1', 'tropicana@gmail.com', '3454 Real Place', 0, 0, '9403293847583740', 434, '2020-12-24'),
+('orange', 'juice', 'tropicana@gmail.com', '3412 Florida Way', 41, 12, '4324868594839281', 345, '2021-04-12');
 
 --
 -- Indexes for dumped tables
@@ -189,13 +212,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `instrument`
 --
 ALTER TABLE `instrument`
-  MODIFY `inst_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `inst_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `payment`
 --
 ALTER TABLE `payment`
-  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Constraints for dumped tables
@@ -205,22 +228,22 @@ ALTER TABLE `payment`
 -- Constraints for table `a_i_monitors`
 --
 ALTER TABLE `a_i_monitors`
-  ADD CONSTRAINT `admininstpassword` FOREIGN KEY (`admin_password`) REFERENCES `administrator` (`password`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `instrumentid` FOREIGN KEY (`instrument_id`) REFERENCES `instrument` (`inst_id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `admininstpassword` FOREIGN KEY (`admin_password`) REFERENCES `administrator` (`password`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `instrumentid` FOREIGN KEY (`instrument_id`) REFERENCES `instrument` (`inst_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `a_p_monitors`
 --
 ALTER TABLE `a_p_monitors`
-  ADD CONSTRAINT `adminpaypassword` FOREIGN KEY (`admin_password`) REFERENCES `administrator` (`password`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `payid` FOREIGN KEY (`payment_id`) REFERENCES `payment` (`payment_id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `adminpaypassword` FOREIGN KEY (`admin_password`) REFERENCES `administrator` (`password`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `payid` FOREIGN KEY (`payment_id`) REFERENCES `payment` (`payment_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `a_u_monitors`
 --
 ALTER TABLE `a_u_monitors`
-  ADD CONSTRAINT `adminpassword` FOREIGN KEY (`admin_password`) REFERENCES `administrator` (`password`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `userusername` FOREIGN KEY (`user_username`) REFERENCES `user` (`username`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `adminpassword` FOREIGN KEY (`admin_password`) REFERENCES `administrator` (`password`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `userusername` FOREIGN KEY (`user_username`) REFERENCES `user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `instrument`

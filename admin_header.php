@@ -1,6 +1,7 @@
 <head>
 	<title>Instrument Rentals</title>
-	<!-- Compiled and minified CSS -->
+	<!-- This is the header for the admin page. 
+    It is very similar to inst_header2 except this one lists the password of the administrator currently logged in. -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <style type="text/css">
     	.brand {
