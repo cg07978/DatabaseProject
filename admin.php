@@ -5,6 +5,66 @@ session_start();
 include('db_connection.php');
 
 $password = $_SESSION['admin_password'];
+$error = '';
+$illegal = false;
+
+if(empty($password)) {
+	$illegal = true;
+}
+
+if(isset($_POST['delete_u'])) {
+$mistake = false;
+$du = $_POST['user_to_delete'];
+$sql = "SELECT * FROM instrument WHERE owner_username = '$du'";
+$result = mysqli_query($conn, $sql);
+if(mysqli_num_rows($result) != 0) {
+	$error = "That user owns at least one instrument. Their account cannot be deleted unless they does not own one.";
+	$mistake = true;
+}
+$sql = "SELECT * FROM instrument WHERE renter_username = '$du'";
+$result = mysqli_query($conn, $sql);
+if(mysqli_num_rows($result) != 0) {
+	$error = "That user is renting at least one instrument. Their account cannot be deleted unless they are not renting one.";
+	$mistake = true;
+}
+$sql = "SELECT * FROM payment WHERE payer_username = '$du'";
+$result = mysqli_query($conn, $sql);
+if(mysqli_num_rows($result) != 0) {
+	$error = "That user owes money on at least one payment. Their account cannot be deleted unless they do not owe any money.";
+	$mistake = true;
+}
+$sql = "SELECT * FROM payment WHERE reciever_username = '$du'";
+$result = mysqli_query($conn, $sql);
+if(mysqli_num_rows($result) != 0) {
+	$error = "That user is to recieve money on at least one payment. Their account cannot be deleted unless they have no pending incoming payments.";
+	$mistake = true;
+}
+
+if(!$mistake) {
+	$sql = "DELETE FROM user WHERE username = '$du'";
+	if(!mysqli_query($conn, $sql)) {
+		echo 'query error: '. mysqli_error($conn);
+	}
+}
+
+
+}
+
+if(isset($_POST['delete_i'])) {
+$di = $_POST['inst_id_to_delete'];
+$sql = "DELETE FROM instrument WHERE inst_id = $di";
+	if(!mysqli_query($conn, $sql)) {
+		echo 'query error: '. mysqli_error($conn);
+	}
+}
+
+if(isset($_POST['delete_p'])) {
+$pid = $_POST['pid_to_delete'];
+$sql = "DELETE FROM payment WHERE payment_id = $pid";
+	if(!mysqli_query($conn, $sql)) {
+		echo 'query error: '. mysqli_error($conn);
+	}
+}
 
 $sql = "SELECT * FROM user";
 
@@ -58,13 +118,22 @@ $sql = "SELECT * FROM a_u_monitors WHERE admin_password = '$password'";
 $result = mysqli_query($conn, $sql);
 
 $userswatched = mysqli_fetch_all($result, MYSQLI_ASSOC);
+?>
 
+	<!DOCTYPE html>
+	<html>
+	<?php include 'admin_header.php';
+
+	if($illegal) { ?>
+		<h6 class="red-text">Access forbidden.</h6>
+	<?php }
+
+	if(!empty($error)) { ?>
+		<h6 class="red-text"><?php echo $error ?></h6>
+	<?php }
 
 	if (mysqli_num_rows($result) != 0) {
 	?>
-	<!DOCTYPE html>
-	<html>
-	<?php include 'admin_header.php'; ?>
 	<h3 class="center grey-text">Users:</h3>
 
 	<div class="container">
@@ -116,6 +185,12 @@ $userswatched = mysqli_fetch_all($result, MYSQLI_ASSOC);
 								</li>
 								</ul>
 							</div>
+							<div class="card-action center">
+							<form class="white" action="admin.php" method="POST">
+							<input type="submit" name="delete_u" value="Delete" class="btn btnback z-depth-0">
+							<input type="hidden" name="user_to_delete" value="<?php echo $uw; ?>">
+						</form>
+						</div>
 						</div>
 					</div>
 				</div>
@@ -185,6 +260,12 @@ $intswatched = mysqli_fetch_all($result, MYSQLI_ASSOC);
 								<?php } ?>
 								</ul>
 							</div>
+							<div class="card-action center">
+							<form class="white" action="admin.php" method="POST">
+							<input type="submit" name="delete_i" value="Delete" class="btn btnback z-depth-0">
+							<input type="hidden" name="inst_id_to_delete" value="<?php echo $ui; ?>">
+						</form>
+						</div>
 						</div>
 					</div>
 				</div>
@@ -239,6 +320,12 @@ $payswatched = mysqli_fetch_all($result, MYSQLI_ASSOC);
 								</li>
 								</ul>
 							</div>
+							<div class="card-action center">
+							<form class="white" action="admin.php" method="POST">
+							<input type="submit" name="delete_p" value="Delete" class="btn btnback z-depth-0">
+							<input type="hidden" name="pid_to_delete" value="<?php echo $pi; ?>">
+						</form>
+						</div>
 						</div>
 					</div>
 				</div>
@@ -250,10 +337,5 @@ $payswatched = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
 	<?php } ?>
 
-	?>
 
 </html>
-
-
-
-?>

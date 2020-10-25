@@ -75,7 +75,11 @@
 		mysqli_free_result($result);
 		mysqli_close($conn);
 
-		if(strcmp($instrument['owner_username'], $username) != 0) {
+		if(empty($username)) {
+			$illegal = true;
+		}
+
+		else if(strcmp($instrument['owner_username'], $username) != 0) {
 			$illegal = true;
 		}
 

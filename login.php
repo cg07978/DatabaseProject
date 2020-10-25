@@ -106,7 +106,7 @@ $_SESSION['admin_password'] = '';
 			<input type= "text" name="username" value= "<?php echo htmlspecialchars($username) ?>">
 			<div class="red-text"><?php echo $errors['username']; ?></div>
 			<label>Password:</label>
-			<input type= "text" name="password" value= "<?php echo htmlspecialchars($password) ?>">
+			<input type= "password" name="password" value= "<?php echo htmlspecialchars($password) ?>">
 			<div class="red-text"><?php echo $errors['password']; ?></div>
 			<div class="center">
 				<input type="submit" name="newacc" value="Create Account" class="btn btnback z-depth-0">

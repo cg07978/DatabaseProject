@@ -95,6 +95,14 @@ $errors = array('username' => '', 'password' => '', 'email' => '', 'address' => 
 			if(!preg_match('/^\d\d\d\d-\d\d-\d\d$/', $expiration)) {
 				$errors['expiration'] = 'Please enter a date: YYYY-MM-DD';
 			}
+			else {
+				$year = substr($expiration, 0, 4);
+				$month = substr($expiration, 5, 2);
+				$day = substr($expiration, 8);
+				if (!checkdate($month, $day, $year)) {
+					$errors['expiration'] = 'Please enter a valid date.';
+				}
+			}
 		}
 
 
@@ -154,7 +162,7 @@ $errors = array('username' => '', 'password' => '', 'email' => '', 'address' => 
 			<input type= "text" name="username" value= "<?php echo htmlspecialchars($username) ?>">
 			<div class="red-text"><?php echo $errors['username']; ?></div>
 			<label>Password:</label>
-			<input type= "text" name="password" value= "<?php echo htmlspecialchars($password) ?>">
+			<input type= "password" name="password" value= "<?php echo htmlspecialchars($password) ?>">
 			<div class="red-text"><?php echo $errors['password']; ?></div>
 			<label>Email:</label>
 			<input type= "text" name="email" value= "<?php echo htmlspecialchars($email) ?>">
