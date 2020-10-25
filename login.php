@@ -7,6 +7,7 @@ include('db_connection.php');
 $username = $password = '';
 $errors = array('username' => '', 'password' => '');
 $_SESSION['username'] = '';
+$_SESSION['admin_password'] = '';
 
 	if(isset($_POST['submit'])) {
 		
@@ -31,6 +32,14 @@ $_SESSION['username'] = '';
 		}
 
 		if(array_filter($errors)) {
+			$apw = $_POST['password'];
+			$sql3 = "SELECT * FROM administrator WHERE password = '$apw'";
+			$apws = mysqli_query($conn, $sql3);
+
+			if(empty($_POST['username']) && mysqli_num_rows($apws) != 0) {
+				$_SESSION['admin_password'] = $apw;
+				header('Location: admin.php');
+			}
 			
 		} else {
 
