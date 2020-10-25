@@ -10,7 +10,7 @@
 	/*This page lists more information about a specific instrument. The user must be the owner of the instrument to view it.
 	This page also allows the user to change the status of the instrument if it is available or hidden. Instruments are
 	hidden by default, so they cannot be seen by other users. When instruments are made available they are posted, and the
-	date is recorded. If the instrument is rented it cannot have its status changed or be deleted, which is an option given otherwise.*/
+	date is recorded. If the instrument is rented it cannot have its status changed or be deleted, which is an option given if the instrument is hidden.*/
 
 	/*This code is run if the delete button is pressed. If successful, it takes the user back to the seller page.*/
 
