@@ -4,7 +4,7 @@ session_start();
 
 include('db_connection.php');
 
-/*This is page for an admin to user. By default, the one admin monitors all users, instruments, and payments. This interface
+/*This is page for an admin to use. By default, the one admin monitors all users, instruments, and payments. This interface
 allows the admin to view all details of each one, and to delete them if they decide to. To keep the database orderly a user
 cannot be deleted unless they have no relationship with any instruments or payments, which can be accomplished by deletions if need be. This page will display nothing but a message if the one accessing it is not an administrator. Any deletion errors
 are saved and displayed.*/
