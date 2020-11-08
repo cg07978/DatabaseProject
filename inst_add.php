@@ -34,7 +34,7 @@ $errors = array('name' => '', 'price' => '');
 			if(!preg_match('/^\d+.\d\d$/', $price)) {
 				$errors['price'] = 'Price must be in the form N+.NN';
 			}
-			else if(strlen($price) > 13) {
+			else if(strlen($price) > 11) {
 				$errors['price'] = "That price is way too high.";
 			}
 		}
