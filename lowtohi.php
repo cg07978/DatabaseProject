@@ -75,14 +75,18 @@ $instruments = mysqli_fetch_all($result, MYSQLI_ASSOC);
 									mysqli_free_result($result);	
 									$res;
 									if ($user['feedback_count'] == 0) {
-									$res = 'None';
+									$res = 'None'; ?>
+									<li><?php echo 'Seller Rating: '.htmlspecialchars($res) ?></li>
+									<?php
 									}
 									else {
 									$res = $user['total_points'] / $user['feedback_count'];
+									?>
+									<li><?php echo 'Seller Rating: '.htmlspecialchars(number_format((float)$res, 2, '.', '')).'/5.0' ?></li>
+									<?php
 									}
 
 									 ?>
-									 <li><?php echo 'Seller Rating: '.htmlspecialchars(number_format((float)$res, 2, '.', '')).'/5.0' ?></li>
 								</ul>
 							</div>
 						</div>
