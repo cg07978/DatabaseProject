@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 08, 2020 at 05:11 PM
+-- Generation Time: Nov 18, 2020 at 11:09 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.6
 
@@ -55,7 +55,9 @@ CREATE TABLE `a_i_monitors` (
 
 INSERT INTO `a_i_monitors` (`admin_password`, `instrument_id`) VALUES
 ('clause490', 8),
-('clause490', 9);
+('clause490', 9),
+('clause490', 12),
+('clause490', 14);
 
 -- --------------------------------------------------------
 
@@ -74,7 +76,7 @@ CREATE TABLE `a_p_monitors` (
 
 INSERT INTO `a_p_monitors` (`admin_password`, `payment_id`) VALUES
 ('clause490', 11),
-('clause490', 12);
+('clause490', 13);
 
 -- --------------------------------------------------------
 
@@ -93,7 +95,6 @@ CREATE TABLE `a_u_monitors` (
 
 INSERT INTO `a_u_monitors` (`admin_password`, `user_username`) VALUES
 ('clause490', 'firstone1'),
-('clause490', 'musicstore'),
 ('clause490', 'orange');
 
 -- --------------------------------------------------------
@@ -119,8 +120,10 @@ CREATE TABLE `instrument` (
 
 INSERT INTO `instrument` (`inst_id`, `name`, `date_posted`, `price`, `status`, `rent_time`, `owner_username`, `renter_username`) VALUES
 (8, 'drum', '2020-11-08 08:58:20', '5.65', 'available', NULL, 'orange', NULL),
-(9, 'harp', '2020-11-08 08:58:34', '8.95', 'rented', '2020-11-09 08:59:40', 'orange', 'firstone1'),
-(11, 'A Very Valuable Piano', NULL, '11111111.00', 'hidden', NULL, 'orange', NULL);
+(9, 'harp', '2020-11-18 17:07:59', '8.95', 'available', NULL, 'orange', NULL),
+(12, 'tambourine', '2020-11-18 17:08:06', '15.55', 'available', NULL, 'orange', NULL),
+(14, 'flute', '2020-11-09 10:09:01', '5.00', 'rented', '2020-11-19 17:07:25', 'orange', 'firstone1'),
+(15, 'horn', '2020-11-09 12:38:18', '5.65', 'available', NULL, 'firstone1', NULL);
 
 -- --------------------------------------------------------
 
@@ -142,7 +145,7 @@ CREATE TABLE `payment` (
 
 INSERT INTO `payment` (`payment_id`, `start_date`, `amount`, `payer_username`, `reciever_username`) VALUES
 (11, '2020-10-25 18:57:55', '11.30', 'firstone1', 'orange'),
-(12, '2020-10-25 19:08:58', '26.85', 'firstone1', 'orange');
+(13, '2020-11-09 10:10:05', '26.85', 'firstone1', 'orange');
 
 -- --------------------------------------------------------
 
@@ -168,8 +171,7 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`username`, `password`, `email`, `address`, `total_points`, `feedback_count`, `dig`, `security_code`, `expiration_date`) VALUES
 ('firstone1', 'secondone1', 'tropicana@gmail.com', '3454 Real Place', 0, 0, '9403293847583740', 434, '2020-12-24'),
-('musicstore', 'creativepassword', 'musicstore@genericemail.com', '7865 Sound Road', 0, 0, '7382836473847364', 545, '2021-10-12'),
-('orange', 'juice', 'tropicana@gmail.com', '3412 Florida Way', 44, 14, '4324868594839281', 345, '2021-04-12');
+('orange', 'juice', 'tropicana@gmail.com', '3412 Florida Way', 48, 15, '4324868594839281', 345, '2021-04-12');
 
 --
 -- Indexes for dumped tables
@@ -232,13 +234,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `instrument`
 --
 ALTER TABLE `instrument`
-  MODIFY `inst_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `inst_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `payment`
 --
 ALTER TABLE `payment`
-  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- Constraints for dumped tables
